@@ -23,6 +23,8 @@ import java.awt.Image;
 import javax.imageio.ImageIO;
 import java.io.IOException;
 
+import java.util.logging.Logger;
+import java.util.logging.Level;
 /**
  * It implements the business logic as a web service.
  */
@@ -31,6 +33,8 @@ public class BLFacadeImplementation implements BLFacade {
     private static final int baseSize = 160;
     private static final String basePath = "src/main/resources/images/";
     DataAccess dbManager;
+    
+    private static final Logger logger = Logger.getLogger(BLFacadeImplementation.class.getName());
 
     public BLFacadeImplementation() {
         System.out.println("Creating BLFacadeImplementation instance");
@@ -109,7 +113,7 @@ public class BLFacadeImplementation implements BLFacade {
         try {
             return ImageIO.read(image);
         } catch (IOException e) {
-            e.printStackTrace();
+        	logger.log (Level.SEVERE, "Errorea eskaera ezabatzean", e);
         }
         return null;
     }
@@ -344,7 +348,7 @@ public class BLFacadeImplementation implements BLFacade {
         try {
             ofertak = dbManager.getOffersForDemand(d);
         } catch (Exception e) {
-            e.printStackTrace();
+        	logger.log (Level.SEVERE, "Errorea eskaera ezabatzean", e);
         } finally {
             dbManager.close(); // Ziurtatu beti itxi egiten dela
         }
@@ -374,6 +378,7 @@ public class BLFacadeImplementation implements BLFacade {
         return s;
     }
     
+    
     @WebMethod
     public boolean deleteDemand(Demand d) {
         dbManager.open();
@@ -381,7 +386,7 @@ public class BLFacadeImplementation implements BLFacade {
         try {
             ondo = dbManager.deleteDemand(d);
         } catch (Exception e) {
-            e.printStackTrace();
+        	logger.log (Level.SEVERE, "Errorea eskaera ezabatzean", e);
         } finally {
             dbManager.close();
         }

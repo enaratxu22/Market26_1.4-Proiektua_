@@ -10,9 +10,14 @@ import java.awt.event.ActionEvent;
 
 public class BizumGUI extends JFrame {
     private float kopurua;
-    private Seller user;
+    private final Seller user;
     private JFrame previousFrame;
     private boolean isSarrera;
+    
+    public Seller getUser() {
+        return user;
+    }
+
 
     public BizumGUI(float kopurua, Seller user, JFrame previousFrame, boolean isSarrera) {
     	setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

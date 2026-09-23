@@ -33,6 +33,8 @@ public class DataAccess  {
 	private  EntityManagerFactory emf;
 	private static final int baseSize = 160;
 	private static final String basePath="src/main/resources/images/";
+	
+	private static final String ETIQUETAS = "Etiquetas";
 
 	ConfigXML c=ConfigXML.getInstance();
 
@@ -98,16 +100,16 @@ public class DataAccess  {
 		}
 		try {
 			if(pubDate.before(UtilDate.trim(new Date()))) {
-				throw new MustBeLaterThanTodayException(ResourceBundle.getBundle("Etiquetas").getString("DataAccess.ErrorSaleMustBeLaterThanToday"));
+				throw new MustBeLaterThanTodayException(ResourceBundle.getBundle(ETIQUETAS).getString("DataAccess.ErrorSaleMustBeLaterThanToday"));
 			}
 			if (file==null)
-				throw new FileNotUploadedException(ResourceBundle.getBundle("Etiquetas").getString("DataAccess.ErrorFileNotUploadedException"));
+				throw new FileNotUploadedException(ResourceBundle.getBundle(ETIQUETAS).getString("DataAccess.ErrorFileNotUploadedException"));
 
 			db.getTransaction().begin();
 			Seller seller = db.find(Seller.class, sellerEmail);
 			if (seller.doesSaleExist(title)) {
 				db.getTransaction().commit();
-				throw new SaleAlreadyExistException(ResourceBundle.getBundle("Etiquetas").getString("DataAccess.SaleAlreadyExist"));
+				throw new SaleAlreadyExistException(ResourceBundle.getBundle(ETIQUETAS).getString("DataAccess.SaleAlreadyExist"));
 			}
 
 			Sale sale = seller.addSale(title, description, status, price, pubDate, file);
@@ -128,10 +130,10 @@ public class DataAccess  {
 
 	    try {
 	        if(pubDate.before(UtilDate.trim(new Date()))) {
-	            throw new MustBeLaterThanTodayException(ResourceBundle.getBundle("Etiquetas").getString("DataAccess.ErrorSaleMustBeLaterThanToday"));
+	            throw new MustBeLaterThanTodayException(ResourceBundle.getBundle(ETIQUETAS).getString("DataAccess.ErrorSaleMustBeLaterThanToday"));
 	        }
 	        if (file == null)
-	            throw new FileNotUploadedException(ResourceBundle.getBundle("Etiquetas").getString("DataAccess.ErrorFileNotUploadedException"));
+	            throw new FileNotUploadedException(ResourceBundle.getBundle(ETIQUETAS).getString("DataAccess.ErrorFileNotUploadedException"));
 
 	        db.getTransaction().begin();
 	        Seller seller = db.find(Seller.class, sellerEmail);
